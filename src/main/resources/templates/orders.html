@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head" />
+<body>
+	<div class="app">
+		<div th:replace="fragments :: header"></div>
+		<div class="container my-5">
+			<p th:if="${message}" class="alert alert-success mb-1 text-center">[[${message}]]</p>
+			<p class="alert alert-info">Your order history</p>
+			<table class="table table-bordered text-center">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Time order</th>
+						<th scope="col">Address</th>
+						<th scope="col">Status</th>
+						<th scope="col">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="order : ${orders}">
+						<th scope="row">[[${orderStat.index + 1}]]</th>
+						<td>[[${order.formatTime}]]</td>
+						<td>[[${order.orderAddress.addressString}]]</td>
+						<td><i th:class="'fas fa-2x fa-check-circle ' + ${order.status ? 'text-success' : 'text-secondary'}"></i></td>
+						<th><a class="btn btn-sm btn-primary" th:href="@{/orders/view/} + ${order.id}">View</a></th>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div th:replace="fragments :: footer"></div>
+	</div>
+	<div th:replace="fragments :: script(tag)"></div>
+	<script>
+		window.onload = function() {
+			document.getElementById("finishCheckoutBtn").addEventListener("click", function(e) {
+				let addressId = document.querySelector("input[name='address']:checked");
+				if (addressId == null) {
+					var myModal = new bootstrap.Modal(document.getElementById('modalDialog'), {
+  						keyboard: false
+					});
+					myModal.show();
+				} else {
+					addressId = addressId.value;
+					console.log(addressId);
+					const form = document.getElementById('finishcheckout');
+  					form.submit();
+				}
+			})
+		}
+	</script>
+</body>
+</html>

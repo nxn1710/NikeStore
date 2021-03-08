@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head" />
+<body>
+	<div class="app">
+		<div th:replace="fragments :: header"></div>
+		<div class="banner">
+			<div class="container">
+				<div class="row">
+					<div class="col-9 d-none d-md-block">
+						<div class="banner__img">
+							<img src="./images/banner.jpg" alt="" class="img-fluid" />
+							<div class="banner__btn">
+								<a class="btn btn-outline-secondary" th:href="@{/products}"
+									role="button">Shop Now <i class="fas fa-arrow-right"></i>
+								</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-3">
+						<div class="form__search">
+							<div class="form__search-header">
+								<h3>QUICK SEARCH</h3>
+								<p>Lorem ipsum dolor sit amet consectetur, adipisicing
+									elit..</p>
+							</div>
+							<form>
+								<div class="mb-3">
+									<select class="form-select" aria-label="Default select example">
+										<option selected value="-1">Search by Size</option>
+										<option th:each="size : ${listSizes}" th:value="${size.id}">[[${size.value}]]</option>
+									</select>
+								</div>
+								<div class="mb-3">
+									<select class="form-select" aria-label="Default select example">
+										<option selected>Search by Color</option>
+										<option th:each="color : ${listColors}" th:value="${color.id}">[[${color.value}]]</option>
+									</select>
+								</div>
+								<!-- <div class="mb-3 text-center">
+                                        <label
+                                            class="lable__color"
+                                            for="red"
+                                            style="background-color: red"
+                                        ></label>
+                                        <input
+                                            class="input__color"
+                                            id="red"
+                                            type="checkbox"
+                                            value="red"
+                                            name="color"
+                                            hidden
+                                        />
+                                        <label
+                                            class="lable__color"
+                                            for="green"
+                                            style="background-color: green"
+                                        ></label>
+                                        <input
+                                            class="input__color"
+                                            id="green"
+                                            type="checkbox"
+                                            name="color"
+                                            value="green"
+                                            hidden
+                                        />
+                                    </div> -->
+								<div class="mb-3">
+									<select class="form-select" aria-label="Default select example">
+										<option selected>Search by Brand</option>
+										<option th:each="brand : ${listBrands}" th:value="${brand.id}">[[${brand.name}]]</option>
+									</select>
+								</div>
+								<div class="mb-3">
+									<select class="form-select" aria-label="Default select example">
+										<option selected>Search by Style</option>
+										<option th:each="style : ${listStyles}" th:value="${style.id}">[[${style.name}]]</option>
+									</select>
+								</div>
+								<button type="submit" class="btn form__search-submit">
+									Find My Pair!</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="feature-products my-5">
+			<div class="container">
+				<h2 class="products__heading">Feature Items</h2>
+				<div class="row">
+					<div class="col-6 col-md-3">
+						<div class="product my-1">
+							<a href="" class="product__link"> <img
+								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
+								alt="" class="product__thumb" />
+								<div class="product__header">
+									<h3 class="product__name">NIKE AIR FORCE 3</h3>
+									<p class="product__price">$100</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="product my-1">
+							<a href="" class="product__link"> <img
+								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
+								alt="" class="product__thumb" />
+								<div class="product__header">
+									<h3 class="product__name">NIKE AIR FORCE 3</h3>
+									<p class="product__price">$100</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="product my-1">
+							<a href="" class="product__link"> <img
+								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
+								alt="" class="product__thumb" />
+								<div class="product__header">
+									<h3 class="product__name">NIKE AIR FORCE 3</h3>
+									<p class="product__price">$100</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="product my-1">
+							<a href="" class="product__link"> <img
+								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
+								alt="" class="product__thumb" />
+								<div class="product__header">
+									<h3 class="product__name">NIKE AIR FORCE 3</h3>
+									<p class="product__price">$100</p>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="sale-products my-5">
+			<div class="container">
+				<h2 class="products__heading">Sale Items</h2>
+				<div class="row">
+					<div class="col-6 col-md-3">
+						<div class="product my-1">
+							<a href="" class="product__link"> <img
+								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
+								alt="" class="product__thumb" />
+								<div class="product__header">
+									<h3 class="product__name">NIKE AIR FORCE 3</h3>
+									<p class="product__price">$100</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="product my-1">
+							<a href="" class="product__link"> <img
+								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
+								alt="" class="product__thumb" />
+								<div class="product__header">
+									<h3 class="product__name">NIKE AIR FORCE 3</h3>
+									<p class="product__price">$100</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="product my-1">
+							<a href="" class="product__link"> <img
+								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
+								alt="" class="product__thumb" />
+								<div class="product__header">
+									<h3 class="product__name">NIKE AIR FORCE 3</h3>
+									<p class="product__price">$100</p>
+								</div>
+							</a>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="product my-1">
+							<a href="" class="product__link"> <img
+								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
+								alt="" class="product__thumb" />
+								<div class="product__header">
+									<h3 class="product__name">NIKE AIR FORCE 3</h3>
+									<p class="product__price">$100</p>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments :: footer"></div>
+	</div>
+	<div th:replace="fragments :: script(tag)"></div>
+</body>
+</html>

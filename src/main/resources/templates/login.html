@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head" />
+<body>
+	<div class="app">
+		<div th:replace="fragments :: header"></div>
+
+		<div class="container my-5">
+			<p th:if="${message != null}" th:class="${!error == true ? 'alert alert-success text-center' : 'alert alert-error text-center'}">[[${message}]]</p>
+			<p th:if="${param.error}" class="alert alert-danger text-center">[[${session.SPRING_SECURITY_LAST_EXCEPTION.message}]]</p>
+			<p th:if="${param.logout}" class="alert alert-danger text-center">You have been logout</p>
+			<div class="row justify-content-center">
+				<div class="col-md-6">
+					<ul class="nav nav-tabs" id="myTab" role="tablist">
+						<li class="nav-item" role="presentation">
+							<button class="nav-link active" id="login-tab"
+								data-bs-toggle="tab" data-bs-target="#login" type="button"
+								role="tab" aria-controls="login" aria-selected="true">
+								Login</button>
+						</li>
+						<li class="nav-item" role="presentation">
+							<button class="nav-link" id="register-tab" data-bs-toggle="tab"
+								data-bs-target="#register" type="button" role="tab"
+								aria-controls="register" aria-selected="false">
+								Register</button>
+						</li>
+					</ul>
+					<div class="tab-content" id="myTabContent">
+						<div class="tab-pane fade show active" id="login" role="tabpanel"
+							aria-labelledby="login-tab">
+							<form th:action="@{/login}" method="POST">
+								<div class="my-3">
+									<label class="form-label">Email
+										address</label> <input type="email" class="form-control" name="email" required/>
+								</div>
+								<div class="mb-3">
+									<label class="form-label">Password</label>
+									<input type="password" class="form-control" name="password" required/>
+								</div>
+								<button type="submit" class="btn btn-primary">Login</button>
+							</form>
+						</div>
+						<div class="tab-pane fade" id="register" role="tabpanel"
+							aria-labelledby="register-tab">
+							<form th:action="@{/process_register}" method="POST">
+								<div class="my-2">
+									<label class="form-label">Email
+										address</label> <input type="email" class="form-control" th:field="${user.email}" required/>
+								</div>
+								<div class="mb-2">
+									<label class="form-label">Password</label>
+									<input type="password" class="form-control" th:field="${user.password}" required/>
+								</div>
+								<div class="mb-2">
+									<label class="form-label">First
+										Name</label> <input type="text" class="form-control" required th:field="${user.firstName}"/>
+								</div>
+								<div class="mb-2">
+									<label class="form-label">Last
+										Name</label> <input type="text" class="form-control" required th:field="${user.lastName}" />
+								</div>
+								<button type="submit" class="btn btn-primary">Sign In</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments :: footer"></div>
+		<div th:replace="fragments :: script(tag)"></div>
+	</div>
+</body>
+</html>

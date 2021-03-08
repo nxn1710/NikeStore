@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head" />
+<body>
+	<div class="app">
+		<div th:replace="fragments :: header"></div>
+		<div class="product__detail my-4" th:object="${product}">
+			<div class="container px-5">
+				<div class="row">
+					<div class="col-12 col-md-8">
+						<div class="row">
+							<div th:each="image : ${product.images}"
+								class="col-12 col-md-6 px-1">
+								<img class="product__image" th:src="${image.url}" />
+							</div>
+						</div>
+					</div>
+					<div class="col-12 col-md-4  pl-5">
+						<div class="product__info">
+							<h1 class="product__info-name mb-1">[[*{name}]]</h1>
+							<p class="product__info-price mb-1">Price: $[[*{price}]]</p>
+							<form th:action="@{/bag}" method="post" name="buyproduct">
+								<p class="mb-1">Select Size</p>
+								<div class="row m-0 text-center">
+									<div th:each="productSize : *{productsSizeses}" class="col-4 p-0">
+										<label th:quantity="${productSize.quantity}" th:for="'size__' + ${productSize.size.value}" th:class="${productSize.quantity == 0 ? 'label_size mx-0 disabled' : 'label_size mx-0'}">[[${productSize.size.value}]]</label>
+										<input th:id="'size__' + ${productSize.size.value}" type="radio" name="productSize" th:value="${productSize.id}"
+											hidden />
+									</div>
+								</div>
+								<p class="my-1" id="product-quantity"></p>
+								<input id="addToBagBtn" class="btn btn__primary btn__buy mt-2" type="submit"
+									value="Add to Bag" />
+									<a
+									class="btn btn__primary btn__favourite mt-2" type="submit">Favourite</a>
+							</form>
+							<p class="mt-3 mb-0">Information</p>
+							<ul class="fs-6 mb-0">							
+								<li class="mb-0">Main Color: [[*{color.value}]]</li>
+								<li class="mb-0">Brand: [[*{brand.name}]]</li>
+								<li class="mb-0">Category: [[*{category.name}]]</li>
+								<li class="mb-0">Style: [[*{style.name}]]</li>
+							</ul>
+							<p class="mb-0">[[*{description}]]</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal" id="buywarningmodal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Warning Buy Product</h5>
+						<button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal"
+							aria-label="Close"><i class="fas fa-times"></i></button>
+					</div>
+					<div class="modal-body alert alert-warning mb-0">
+						<p>Please select a size.</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger"
+							data-bs-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments :: footer"></div>
+	</div>
+	<div th:replace="fragments :: script(tag)"></div>
+	<script>
+		window.onload = function() {
+			document.getElementById("addToBagBtn").addEventListener("click", function(e) {			
+				let checkedSize = document.querySelector("input[name='productSize']:checked");
+				if (checkedSize == null) {
+					e.preventDefault();
+					var myModal = new bootstrap.Modal(document.getElementById('buywarningmodal'), {
+		  				keyboard: false
+					});
+					myModal.show();
+				} else {
+				
+				}
+			});
+		}
+	</script>
+	
+</body>
+</html>

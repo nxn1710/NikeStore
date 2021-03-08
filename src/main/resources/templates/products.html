@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head" />
+<body>
+	<div class="app">
+		<div th:replace="fragments :: header"></div>
+		<div class="products my-5">
+			<div class="container">
+				<h2 class="products__heading">[[${title}]]</h2>
+				<div class="row">
+					<div th:each="product : ${listProducts}"
+						class="col-6 col-md-3 px-2">
+						<div class="product my-2">
+							<a th:href="@{/p/} + ${product.slug}" class="product__link">
+								<div class="text-center">
+									<img th:src="${product.thumbnailUrl}" alt="Thubmnail Product"
+										class="product__thumb img-fluid" />
+								</div>
+								<hr class="my-2">
+								<div class="product__header">
+									<h3 class="product__name">[[${product.name}]]</h3>
+									<p class="product__price">$[[${product.price}]]</p>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+				<nav class="mt-4">
+					<ul class="pagination justify-content-center">
+						<li
+							th:class="${currPage > 1 ? 'page-item' : 'page-item disabled'}">
+							<a th:replace="fragments :: page_link(1, 'First')"></a>
+						<li
+							th:class="${currPage > 1 ? 'page-item' : 'page-item disabled'}"><a th:replace="fragments :: page_link(${currPage - 1}, 'Previous')"></a></li>
+						<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+							th:class="${currPage != i ? 'page-item' : 'page-item active'}">
+							<a th:replace="fragments :: page_link(${i}, ${i})"></a>
+						<li
+							th:class="${currPage < totalPages ? 'page-item' : 'page-item disabled'}"><a th:replace="fragments :: page_link(${currPage + 1}, 'Next')"></a></li>
+						<li
+							th:class="${currPage < totalPages ? 'page-item' : 'page-item disabled'}"><a th:replace="fragments :: page_link(${totalPages}, 'Last')"></a></li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+		<div th:replace="fragments :: footer"></div>
+	</div>
+	<div th:replace="fragments :: script(tag)"></div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head" />
+<body>
+	<div class="app">
+		<div th:replace="fragments :: header"></div>
+		<div class="cart my-5">
+			<div class="container">
+				<p class="alert alert-danger text-center" th:if="!${order.status}">This order has not been confirmed</p>
+				<p class="alert alert-success text-center" th:if="${order.status}">This order has been confirmed</p>
+				<div class="row">
+					<div class="col-8">
+						<div class="cart__item" th:each="order : ${order.orderDetailses}">
+							<div class="row">
+								<div class="col-3 text-center">
+									<img th:src="${order.productsSizes.product.thumbnailUrl}" alt=""
+										class="img-fluid" style="width: 80%" />
+								</div>
+								<div class="col-8 p-0 cart__item-info">
+									<div>
+										<a th:href="@{/p/} + ${order.productsSizes.product.slug}"
+											class="cart__item-name">[[${order.productsSizes.product.name}]]</a>
+										<span>[[${order.productsSizes.product.category.name}]]
+											Shoe</span> <span>[[${order.productsSizes.product.color.value}]]</span>
+										<span>Size [[${order.productsSizes.size.value}]] |
+											Quantity [[${order.quantity}]]</span>
+									</div>
+									<p class="cart__item-price">$[[${order.price}]]</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-4 cart__summary">
+						<h5>Summary</h5>
+						<div class="cart__summary-line">
+							<p>Time Order</p>
+							<p>[[${order.formatTime}]]</p>
+						</div>
+						<div>
+							<p>Shipping Address</p>
+							<p class="text-right">[[${order.orderAddress.addressString}]]</p>
+						</div>
+						<hr />
+						<div class="cart__summary-line">
+							<p>Subtotal</p>
+							<p>$[[${@calculateSubTotalUtil.caculateSubTotal(order)}]]</p>
+						</div>
+						<div class="cart__summary-line">
+							<p>Estimated Delivery & Handling</p>
+							<p>$0</p>
+						</div>
+						<hr />
+						<div class="cart__summary-line">
+							<p>Total</p>
+							<p>$[[${@calculateSubTotalUtil.caculateSubTotal(order)}]]</p>
+						</div>
+						<hr />
+						<div class="text-center">
+							<button id="shoppingBtn" class="btn btn__primary cart__btn">Shopping Now</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments :: footer"></div>
+	</div>
+	<div th:replace="fragments :: script(tag)"></div>
+	<script>
+		window.onload = function() {
+			document.getElementById("shoppingBtn").addEventListener("click", function() {
+				window.location = "[[@{/products}]]";
+			});
+		}
+	</script>
+</body>
+</html>

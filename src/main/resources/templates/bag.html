@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: html_head" />
+<body>
+	<div class="app">
+		<div th:replace="fragments :: header"></div>
+		<div class="cart my-5">
+			<div class="container">
+				<p class="alert alert-success text-center" th:if="${message}">[[${message}]]</p>
+				<p class="alert alert-primary text-center"
+					th:if="!${session.bag} OR ${session.bag.size == 0}">Your bag is
+					empty</p>
+				<div class="row" th:if="${session.bag}">
+					<div class="col-8">
+						<div class="cart__item" th:each="item : ${session.bag}">
+							<div class="row">
+								<div class="col-3 text-center">
+									<img th:src="${item.productsSizes.product.thumbnailUrl}" alt=""
+										class="img-fluid" style="width: 80%" />
+								</div>
+								<div class="col-8 p-0 cart__item-info">
+									<div>
+										<a th:href="@{/p/} + ${item.productsSizes.product.slug}"
+											class="cart__item-name">[[${item.productsSizes.product.name}]]</a>
+										<span>[[${item.productsSizes.product.category.name}]]
+											Shoe</span> <span>[[${item.productsSizes.product.color.value}]]</span>
+										<span>Size [[${item.productsSizes.size.value}]] |
+											Quantity <select th:productId="${item.productsSizes.id}"
+											onchange="changeQuantity(event, this)"
+											class="cart__item-quantity">
+												<option
+													th:each="i: ${#numbers.sequence(1, item.productsSizes.quantity > 10 ? 10 : item.productsSizes.quantity)}"
+													th:selected="${i == item.quantity}" th:value="${i}">[[${i}]]</option>
+										</select>
+										</span><a th:href="@{/bag/remove/} + ${item.productsSizes.id}"
+											class="cart__item-remove">Remove from bag</a>
+									</div>
+									<p class="cart__item-price">$[[${item.productsSizes.product.price
+										* item.quantity}]]</p>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-4 cart__summary">
+						<h5>Summary</h5>
+						<div class="cart__summary-line">
+							<p>Subtotal</p>
+							<p>$[[${@calculateSubTotalUtil.caculateSubTotal(session.bag)}]]</p>
+						</div>
+						<div class="cart__summary-line">
+							<p>Estimated Delivery & Handling</p>
+							<p>$0</p>
+						</div>
+						<hr />
+						<div class="cart__summary-line">
+							<p>Total</p>
+							<p>$[[${@calculateSubTotalUtil.caculateSubTotal(session.bag)}]]</p>
+						</div>
+						<hr />
+						<div class="text-center">
+							<button id="checkoutBtn" class="btn btn__primary cart__btn">Member
+								Checkout</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div th:replace="fragments :: footer"></div>
+	</div>
+	<div th:replace="fragments :: script(tag)"></div>
+	<script>
+		window.onload = function() {
+			document.getElementById("checkoutBtn").addEventListener("click", function() {
+				window.location = "[[@{/checkout}]]";
+			});
+			
+			function changeQuantity(e, quantity) {
+				
+			}
+		}
+	</script>
+</body>
+</html>
