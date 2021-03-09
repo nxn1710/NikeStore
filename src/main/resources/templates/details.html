@@ -19,7 +19,7 @@
 						<div class="product__info">
 							<h1 class="product__info-name mb-1">[[*{name}]]</h1>
 							<p class="product__info-price mb-1">Price: $[[*{price}]]</p>
-							<form th:action="@{/bag}" method="post" name="buyproduct">
+							<form th:action="@{/bag/add}" method="post" name="buyproduct">
 								<p class="mb-1">Select Size</p>
 								<div class="row m-0 text-center">
 									<div th:each="productSize : *{productsSizeses}" class="col-4 p-0">

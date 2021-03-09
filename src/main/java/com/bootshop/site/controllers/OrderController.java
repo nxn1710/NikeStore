@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -45,7 +46,7 @@ public class OrderController {
 	private OrderService orderService;
 	@Autowired
 	private OrderDetailsService orderDetailsService;
-	@PostMapping("/bag")
+	@PostMapping("/bag/add")
 	public String addToCart(Model model, HttpSession session, HttpServletRequest request) throws QuantityOutOfStock {
 		// @AuthenticationPrincipal CustomUserDetails loggedUser,
 		Integer productSizeId = Integer.parseInt(request.getParameter("productSize"));
@@ -74,7 +75,7 @@ public class OrderController {
 	}
 
 	@GetMapping("/bag/remove/{id}")
-	public String removeItemFromBag(@PathVariable(name = "id") Integer id, HttpSession session, Model model) {
+	public String removeItemFromBag(@PathVariable(name = "id") Integer id, HttpSession session, RedirectAttributes redirectAttributes) {
 		List<Item> bag = (List<Item>) session.getAttribute("bag");
 		if (bag == null) {
 			return "bag";
@@ -83,7 +84,7 @@ public class OrderController {
 			if (index == -1) {
 				return "bag";
 			} else {
-				model.addAttribute("message", "Remove Product from bag successfully");
+				redirectAttributes.addAttribute("message", "Remove Product from bag successfully");
 				bag.remove(index);
 				if (bag.size() == 0) {
 					session.removeAttribute("bag");
@@ -92,7 +93,7 @@ public class OrderController {
 			}
 		}
 		session.setAttribute("bag", bag);
-		return "bag";
+		return "redirect:/bag";
 	}
 
 	public int findProductInBag(Integer id, List<Item> list) {
@@ -104,9 +105,9 @@ public class OrderController {
 		return -1;
 	}
 
-	@GetMapping("/updatebag/{id}/{quantity}")
+	@GetMapping("/bag/update/{id}/{quantity}")
 	public String removeItemFromBag(@PathVariable(name = "id") Integer id,
-			@PathVariable(name = "quantity") Integer quantity, HttpSession session, Model model)
+			@PathVariable(name = "quantity") Integer quantity, HttpSession session,RedirectAttributes redirectAttributes)
 			throws QuantityOutOfStock {
 		List<Item> bag = (List<Item>) session.getAttribute("bag");
 		if (bag == null) {
@@ -118,14 +119,14 @@ public class OrderController {
 			} else {
 				if (bag.get(index).getProductsSizes().getQuantity() >= quantity) {
 					bag.get(index).setQuantity(quantity);
-					model.addAttribute("message", "Successful update of purchases from the bag ");
+					redirectAttributes.addFlashAttribute("message", "Successfully updated the quantity of product purchases from the bag");
 				} else {
-					model.addAttribute("message", "Not available quantity in store");
+					redirectAttributes.addFlashAttribute("message", "Not available quantity in store");
 				}
 			}
 		}
 		session.setAttribute("bag", bag);
-		return "bag";
+		return "redirect:/bag";
 	}
 
 	@GetMapping("/checkout")
@@ -184,7 +185,18 @@ public class OrderController {
 	
 	@GetMapping("/orders")
 	public String viewOrdersPage(@AuthenticationPrincipal CustomUserDetails loggedUser, Model model) {
-		model.addAttribute("orders", orderService.getOrdersByUser(loggedUser.getUsername()));
+		return viewOrdersPage(loggedUser, model, 1);
+	}
+	
+	@GetMapping("/orders/page/{pageNumber}")
+	public String viewOrdersPage(@AuthenticationPrincipal CustomUserDetails loggedUser, Model model, @PathVariable(name = "pageNumber") Integer numPage) {
+		Integer orderPerPage = 10;
+		Page<Order> page = orderService.getOrdersByUser(loggedUser.getUsername(),numPage, orderPerPage);
+		model.addAttribute("totalItems", page.getTotalElements());
+		model.addAttribute("index", orderPerPage * (numPage - 1));
+		model.addAttribute("currPage", numPage);
+		model.addAttribute("totalPages", page.getTotalPages());
+		model.addAttribute("orders", page.getContent());
 		return "orders";
 	}
 	

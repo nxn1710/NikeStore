@@ -41,7 +41,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-4 cart__summary">
+					<div class="col-4 cart__summary border p-3">
 						<h5>Summary</h5>
 						<div class="cart__summary-line">
 							<p>Subtotal</p>
@@ -74,9 +74,11 @@
 				window.location = "[[@{/checkout}]]";
 			});
 			
-			function changeQuantity(e, quantity) {
-				
-			}
+		}
+		function changeQuantity(e, quantity) {
+				let newQuantity = quantity.value;
+				let productId = quantity.getAttribute("productId");
+				window.location = "[[@{/bag/update/}]]" + productId + '/' + newQuantity;
 		}
 	</script>
 </body>

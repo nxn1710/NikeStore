@@ -169,6 +169,8 @@
 	</div>
 	<a class="page-link" th:fragment="page_link(pagenum, label)"
 		th:href="@{'/products' + ${category != null ? '/' + {category} : ''} + '/page/' + ${pagenum}}">[[${label}]]</a>
+	<a class="page-link" th:fragment="order_page_link(pagenum, label)"
+		th:href="@{'/orders/page/' + ${pagenum}}">[[${label}]]</a>
 	<div th:fragment="script(tag)" th:remove="tag">
 		<script
 			src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"

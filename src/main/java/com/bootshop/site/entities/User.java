@@ -73,7 +73,7 @@ public class User  implements java.io.Serializable {
     }
 
     
-    @Column(name="email", nullable=false)
+    @Column(name="email", nullable=false, unique=true)
     public String getEmail() {
         return this.email;
     }

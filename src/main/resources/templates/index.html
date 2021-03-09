@@ -20,19 +20,18 @@
 					<div class="col-12 col-md-3">
 						<div class="form__search">
 							<div class="form__search-header">
-								<h3>QUICK SEARCH</h3>
-								<p>Lorem ipsum dolor sit amet consectetur, adipisicing
-									elit..</p>
+								<h5>QUICK SEARCH</h5>
+								<p>Let find your product!!!</p>
 							</div>
-							<form>
+							<form th:action="@{/products}" method="post">
 								<div class="mb-3">
-									<select class="form-select" aria-label="Default select example">
-										<option selected value="-1">Search by Size</option>
-										<option th:each="size : ${listSizes}" th:value="${size.id}">[[${size.value}]]</option>
+									<select class="form-select" name="categoryId" aria-label="Default select example">
+										<option selected value="-1">Search by Category</option>
+										<option th:each="category : ${listCategories}" th:value="${category.id}">[[${category.name}]]</option>
 									</select>
 								</div>
 								<div class="mb-3">
-									<select class="form-select" aria-label="Default select example">
+									<select class="form-select" name="colorId" aria-label="Default select example">
 										<option selected>Search by Color</option>
 										<option th:each="color : ${listColors}" th:value="${color.id}">[[${color.value}]]</option>
 									</select>
@@ -66,13 +65,13 @@
                                         />
                                     </div> -->
 								<div class="mb-3">
-									<select class="form-select" aria-label="Default select example">
+									<select class="form-select" name="brandId" aria-label="Default select example">
 										<option selected>Search by Brand</option>
 										<option th:each="brand : ${listBrands}" th:value="${brand.id}">[[${brand.name}]]</option>
 									</select>
 								</div>
 								<div class="mb-3">
-									<select class="form-select" aria-label="Default select example">
+									<select class="form-select" name="styleId" aria-label="Default select example">
 										<option selected>Search by Style</option>
 										<option th:each="style : ${listStyles}" th:value="${style.id}">[[${style.name}]]</option>
 									</select>
@@ -87,107 +86,20 @@
 		</div>
 		<div class="feature-products my-5">
 			<div class="container">
-				<h2 class="products__heading">Feature Items</h2>
+				<h2 class="products__heading">New Products</h2>
 				<div class="row">
-					<div class="col-6 col-md-3">
-						<div class="product my-1">
-							<a href="" class="product__link"> <img
-								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
-								alt="" class="product__thumb" />
-								<div class="product__header">
-									<h3 class="product__name">NIKE AIR FORCE 3</h3>
-									<p class="product__price">$100</p>
+					<div th:each="product : ${listNewProduct}"
+						class="col-6 col-md-3 px-2">
+						<div class="product my-2">
+							<a th:href="@{/p/} + ${product.slug}" class="product__link">
+								<div class="text-center">
+									<img th:src="${product.thumbnailUrl}" alt="Thubmnail Product"
+										class="product__thumb img-fluid" />
 								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-6 col-md-3">
-						<div class="product my-1">
-							<a href="" class="product__link"> <img
-								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
-								alt="" class="product__thumb" />
+								<hr class="my-2">
 								<div class="product__header">
-									<h3 class="product__name">NIKE AIR FORCE 3</h3>
-									<p class="product__price">$100</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-6 col-md-3">
-						<div class="product my-1">
-							<a href="" class="product__link"> <img
-								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
-								alt="" class="product__thumb" />
-								<div class="product__header">
-									<h3 class="product__name">NIKE AIR FORCE 3</h3>
-									<p class="product__price">$100</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-6 col-md-3">
-						<div class="product my-1">
-							<a href="" class="product__link"> <img
-								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
-								alt="" class="product__thumb" />
-								<div class="product__header">
-									<h3 class="product__name">NIKE AIR FORCE 3</h3>
-									<p class="product__price">$100</p>
-								</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="sale-products my-5">
-			<div class="container">
-				<h2 class="products__heading">Sale Items</h2>
-				<div class="row">
-					<div class="col-6 col-md-3">
-						<div class="product my-1">
-							<a href="" class="product__link"> <img
-								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
-								alt="" class="product__thumb" />
-								<div class="product__header">
-									<h3 class="product__name">NIKE AIR FORCE 3</h3>
-									<p class="product__price">$100</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-6 col-md-3">
-						<div class="product my-1">
-							<a href="" class="product__link"> <img
-								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
-								alt="" class="product__thumb" />
-								<div class="product__header">
-									<h3 class="product__name">NIKE AIR FORCE 3</h3>
-									<p class="product__price">$100</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-6 col-md-3">
-						<div class="product my-1">
-							<a href="" class="product__link"> <img
-								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
-								alt="" class="product__thumb" />
-								<div class="product__header">
-									<h3 class="product__name">NIKE AIR FORCE 3</h3>
-									<p class="product__price">$100</p>
-								</div>
-							</a>
-						</div>
-					</div>
-					<div class="col-6 col-md-3">
-						<div class="product my-1">
-							<a href="" class="product__link"> <img
-								src="https://static.nike.com/a/images/t_default/389b709e-5102-4e55-aa5d-07099b500831/blazer-mid-77-vintage-mens-shoe-flCCX4.jpg"
-								alt="" class="product__thumb" />
-								<div class="product__header">
-									<h3 class="product__name">NIKE AIR FORCE 3</h3>
-									<p class="product__price">$100</p>
+									<h3 class="product__name">[[${product.name}]]</h3>
+									<p class="product__price">$[[${product.price}]]</p>
 								</div>
 							</a>
 						</div>

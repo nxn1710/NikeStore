@@ -19,7 +19,7 @@
 				</thead>
 				<tbody>
 					<tr th:each="order : ${orders}">
-						<th scope="row">[[${orderStat.index + 1}]]</th>
+						<th scope="row">[[${index + orderStat.index + 1}]]</th>
 						<td>[[${order.formatTime}]]</td>
 						<td>[[${order.orderAddress.addressString}]]</td>
 						<td><i th:class="'fas fa-2x fa-check-circle ' + ${order.status ? 'text-success' : 'text-secondary'}"></i></td>
@@ -27,6 +27,22 @@
 					</tr>
 				</tbody>
 			</table>
+			<nav class="mt-4">
+					<ul class="pagination justify-content-center">
+						<li
+							th:class="${currPage > 1 ? 'page-item' : 'page-item disabled'}">
+							<a th:replace="fragments :: order_page_link(1, 'First')"></a>
+						<li
+							th:class="${currPage > 1 ? 'page-item' : 'page-item disabled'}"><a th:replace="fragments :: order_page_link(${currPage - 1}, 'Previous')"></a></li>
+						<li th:each="i : ${#numbers.sequence(1, totalPages)}"
+							th:class="${currPage != i ? 'page-item' : 'page-item active'}">
+							<a th:replace="fragments :: order_page_link(${i}, ${i})"></a>
+						<li
+							th:class="${currPage < totalPages ? 'page-item' : 'page-item disabled'}"><a th:replace="fragments :: order_page_link(${currPage + 1}, 'Next')"></a></li>
+						<li
+							th:class="${currPage < totalPages ? 'page-item' : 'page-item disabled'}"><a th:replace="fragments :: order_page_link(${totalPages}, 'Last')"></a></li>
+					</ul>
+			</nav>
 		</div>
 	</div>
 	<div th:replace="fragments :: footer"></div>

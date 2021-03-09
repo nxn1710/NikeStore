@@ -19,4 +19,8 @@ public class UserService {
 	public User save(User u) {
 		return userRepo.save(u);
 	}
+
+	public boolean isEmailUnique(String email) {
+		return userRepo.getUserByEmail(email) == null;
+	}
 }
